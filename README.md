@@ -4,6 +4,8 @@ This repo is loosely based on [this blog post](https://cyberhacktics.com/passing
 
 I cant guarantee this is 100% secure and will work for 100% of use cases. But i have tested it where a user can ssh into the host and be immediately and transparently dropped into a container with home directory persistence.
 
+I have been unable to get VSCode to work connecting to the host via ssh and being dropped into a container. And running commands directly from an ssh client requires specifying the `-t` argument for a Psudo-TTY
+
 ## installing
 
 ### Copy the contents of the host folder to the root of your host server, set executable, and add new shell to shells file
