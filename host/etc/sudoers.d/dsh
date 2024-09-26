@@ -1,0 +1,1 @@
+%quarantine ALL=(ALL) NOPASSWD: /usr/bin/docker ps -a -q -f name=*-container, /usr/bin/docker exec -it *-container *, /usr/bin/docker run -it --rm --name *-container --hostname *-container --user *\:* --volume *\:* --volume /etc/passwd\:/etc/passwd\:ro --env HOME\=* --workdir * debian-container *

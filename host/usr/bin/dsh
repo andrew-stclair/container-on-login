@@ -1,0 +1,10 @@
+#!/bin/bash
+
+container_shell="/bin/bash"
+result=$(sudo /usr/bin/docker ps -a -q -f name="${USER}-container")
+
+if [[ -n "$result" ]]; then
+  sudo /usr/bin/docker exec -it ${USER}-container $container_shell "$@"
+else
+  sudo /usr/bin/docker run -it --rm --name ${USER}-container --hostname ${USER}-container --user $UID:$GID --volume ${HOME}:${HOME} --volume /etc/passwd:/etc/passwd:ro --env HOME=${HOME} --workdir ${HOME} debian-container $container_shell "$@"
+fi
