@@ -1,5 +1,13 @@
 #!/bin/bash
 
+if [[ -t 0 ]]; then
+    docker_args="${docker_args} --interactive"
+fi
+
+if [[ -t 1 ]]; then
+    docker_args="${docker_args} --tty"
+fi
+
 if [ -z $1 ]; then
   container_shell="/bin/bash"
 else
@@ -8,7 +16,7 @@ fi
 result=$(sudo /usr/bin/docker ps -a -q -f name="${USER}-container")
 
 if [[ -n "$result" ]]; then
-  sudo /usr/bin/docker exec -it "${USER}-container" "$container_shell"
+  sudo /usr/bin/docker exec ${docker_args} "${USER}-container" "$container_shell"
 else
-  sudo /usr/bin/docker run -it --rm --name "${USER}-container" --hostname "${USER}-container" --user $UID:$GID --volume ${HOME}:${HOME} --volume /etc/passwd:/etc/passwd:ro --env HOME=${HOME} --workdir ${HOME} debian-container "$container_shell"
+  sudo /usr/bin/docker run ${docker_args} --rm --name "${USER}-container" --hostname "${USER}-container" --user $UID:$GID --volume ${HOME}:${HOME} --volume /etc/passwd:/etc/passwd:ro --env HOME=${HOME} --workdir ${HOME} debian-container "$container_shell"
 fi
